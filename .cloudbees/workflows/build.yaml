@@ -53,6 +53,8 @@ jobs:
       - id: build-container
         name: Build container image
         uses: docker://gcr.io/kaniko-project/executor:debug
+        env:
+          DOCKER_CONFIG: ${{ cloudbees.home }}/.docker
         run: |
           /kaniko/executor --context $CLOUDBEES_WORKSPACE --dockerfile $CLOUDBEES_WORKSPACE/Dockerfile --destination ${{ vars.DOCKER_USER }}/ld-hackers-web:${{ cloudbees.version }} --tar-path $CLOUDBEES_WORKSPACE/container-image.tar --digest-file $CLOUDBEES_OUTPUTS/IMAGE_DIGEST
       - name: Register an artifact with the platform
